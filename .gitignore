@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#for macaron
+token.json
+
 # C extensions
 *.so
 
