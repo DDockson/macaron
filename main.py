@@ -119,7 +119,7 @@ class ButtonFunction(discord.ui.View):
 
 @bot.command()
 async def savedata(message):
-    if message.user.id == 439421870857519104:
+    if (message.user.guild_permissions.administrator or message.author.id == 439421870857519104) and not isinstance(message.channel, discord.DMChannel):
         serverID = message.guild.id
         user_data_file = f'id/{serverID}.json'
         if os.path.exists(user_data_file):
