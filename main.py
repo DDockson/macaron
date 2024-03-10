@@ -257,4 +257,8 @@ async def 색상설정(interaction: discord.Interaction, color: str):
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
         json.dump(asdf, file, ensure_ascii=False)
 
+@bot.tree.command(name="사용법", description="봇 사용 가이드를 보냅니다")
+async def 사용법(interaction: discord.Interaction):
+    await interaction.response.send_message("`봇 사용 가이드:` <https://zrr.kr/OZGf>", ephemeral=True)
+
 bot.run(token)
