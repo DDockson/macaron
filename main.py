@@ -131,7 +131,10 @@ async def savedata(message):
 @app_commands.describe(id = "bj.afreecatv.com/macaronbot/123456789에서 'macaronbot' 부분")
 async def 아이디설정(interaction: discord.Interaction, id: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
+        return
+    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
         return
     if not re.match("^[a-zA-Z0-9]+$", id):
         await interaction.response.send_message(f"올바른 아프리카 아이디 형식이 아닙니다.", ephemeral=True)
@@ -139,9 +142,6 @@ async def 아이디설정(interaction: discord.Interaction, id: str):
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
-    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
-        return
     await interaction.response.send_message(f"`{id}`(을)를 아프리카 아이디로 설정했습니다!", ephemeral=True)
     asdf['id'] = id
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
@@ -151,14 +151,17 @@ async def 아이디설정(interaction: discord.Interaction, id: str):
 @app_commands.describe(bang = "방송 공지를 할 때 쓰일 뱅온 메시지를 설정합니다")
 async def 뱅온메시지설정(interaction: discord.Interaction, bang: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
+        return
+    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
+        return
+    if len(bang) > 100:
+        await interaction.response.send_message("뱅온 메시지는 공백 포함 100글자 이하여야 합니다.")
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
-    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
-        return
     await interaction.response.send_message(f"`{bang}`(으)로 뱅온 메시지를 설정했습니다!", ephemeral=True)
     asdf['bang'] = bang
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
@@ -168,14 +171,17 @@ async def 뱅온메시지설정(interaction: discord.Interaction, bang: str):
 @app_commands.describe(message = "프로필 사진 옆에 뜨는 메시지를 설정합니다")
 async def 메시지설정(interaction: discord.Interaction, message: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
+        return
+    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
+        return
+    if len(message) > 30:
+        await interaction.response.send_message("메시지는 공ㅂ개 포함 30글자 이하여야 합니다.")
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
-    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
-        return
     await interaction.response.send_message(f"`{message}`(으)로 메시지를 설정했습니다!", ephemeral=True)
     asdf['message'] = message
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
@@ -185,7 +191,7 @@ async def 메시지설정(interaction: discord.Interaction, message: str):
 @app_commands.describe(id = "디스코드 설정 - 고급 - 개발자 모드 활성화 후, 원하늘 채널 우클릭 - 채널 ID 복사하기 클릭")
 async def 채널설정(interaction: discord.Interaction, id: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
         return
     if not is_convertible_to_int(id):
         await interaction.response.send_message(f"올바른 채널 ID 형식이 아닙니다.", ephemeral=True)
@@ -194,7 +200,7 @@ async def 채널설정(interaction: discord.Interaction, id: str):
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
     if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
         return
     await interaction.response.send_message(f"<#{id}> 채널을 공지용 채널로 설정했습니다!", ephemeral=True)
     asdf['channel'] = id
@@ -205,14 +211,17 @@ async def 채널설정(interaction: discord.Interaction, id: str):
 @app_commands.describe(button = "버튼 문구를 설정합니다")
 async def 버튼설정(interaction: discord.Interaction, button: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
+        return
+    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
+        return
+    if len(button) > 20:
+        await interaction.response.send_message("버튼 문구는 공백 포함 20글자 이하여야 합니다.")
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
-    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
-        return
     await interaction.response.send_message(f"`{button}`(을)를 버튼 문구로 설정했습니다!", ephemeral=True)
     asdf['button'] = button
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
@@ -222,14 +231,17 @@ async def 버튼설정(interaction: discord.Interaction, button: str):
 @app_commands.describe(time = "방송 시작 시간 옆에 쓰일 메시지를 설정합니다")
 async def 시간메시지설정(interaction: discord.Interaction, time: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
+        return
+    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
+        return
+    if len(time) > 20:
+        await interaction.response.send_message("시간 메시지는 공백 포함 20글자 이하여야 합니다.")
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
         asdf = json.load(file)
-    if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
-        return
     await interaction.response.send_message(f"`{time}`(을)를 시간 메시지로 설정했습니다!", ephemeral=True)
     asdf['foot'] = time
     with open(f"id/{guildID}.json", 'w', encoding='utf-8') as file:
@@ -239,7 +251,7 @@ async def 시간메시지설정(interaction: discord.Interaction, time: str):
 @app_commands.describe(color = "0545b1 혹은 #0545B1 형식으로 헥스코드를 입력해주시기 바랍니다")
 async def 색상설정(interaction: discord.Interaction, color: str):
     if isinstance(interaction.channel, discord.DMChannel):
-        await interaction.response.send_message(f"명령어는 DM에서 사용하실 수 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어는 DM에서 사용할 수 없습니다.", ephemeral=True)
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
@@ -250,7 +262,7 @@ async def 색상설정(interaction: discord.Interaction, color: str):
         await interaction.response.send_message("해당 형식은 헥스코드 형식이 아닙니다.", ephemeral=True)
         return
     if not (interaction.user.guild_permissions.administrator or interaction.user.id == 439421870857519104):
-        await interaction.response.send_message(f"명령어를 사용하실 권한이 없습니다.", ephemeral=True)
+        await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
         return
     await interaction.response.send_message(f"`{color}`(을)를 임베드 색상으로 설정했습니다!", ephemeral=True)
     asdf['color'] = color
