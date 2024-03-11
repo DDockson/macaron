@@ -47,6 +47,8 @@ async def on_guild_join(guild):
     if not os.path.exists(f"id/{guildID}.json"):
         restricted_channel = await guild.create_text_channel("🔔ㅣ방송알림")
         await restricted_channel.set_permissions(guild.default_role, send_messages=False)
+        bot_role = guild.get_member(bot.user.id)
+        await restricted_channel.set_permissions(bot_role, send_messages=True)
         with open(f"id/{guildID}.json", 'w', encoding='utf-8') as f:
             json.dump({"id": "macaronbot", "bang": "/뱅온메시지설정", "message": "/메시지설정", "channel": f"{str(restricted_channel.id)}", "button": "/버튼설정", "foot": "/시간메시지설정", "color": "0545b1", "previous": False, "broad": None}, f, ensure_ascii=False)
         print(guildID)
