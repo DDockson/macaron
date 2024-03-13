@@ -179,7 +179,7 @@ async def 메시지설정(interaction: discord.Interaction, message: str):
         await interaction.response.send_message("명령어를 사용할 권한이 없습니다.", ephemeral=True)
         return
     if len(message) > 30:
-        await interaction.response.send_message("메시지는 공ㅂ개 포함 30글자 이하여야 합니다.")
+        await interaction.response.send_message("메시지는 공백 포함 30글자 이하여야 합니다.")
         return
     guildID = interaction.guild.id
     with open(f"id/{guildID}.json", 'r', encoding='utf-8') as file:
